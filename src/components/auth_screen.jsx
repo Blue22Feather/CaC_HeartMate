@@ -108,6 +108,13 @@ export const AuthScreen = () => {
         }
     }, [screenMode, firstMOOD]);
 
+    function handleKeyDown (event) {
+        if (event.key === 'Enter') {
+            event.preventDefault();
+            sendData();
+        }
+    }
+
     function sendData() {
         if (screenMode === 'login') {
             const email_input = document.getElementById('i_email');
@@ -451,7 +458,7 @@ export const AuthScreen = () => {
                 </div>
                 <div className={`row__wrapper ${screenMode !== 'sign' && screenMode !== 'login' ? 'transition' : ''} ${screenMode !== 'sign' && screenMode !== 'login' && screenObjectsFade ? 'hidden' : ''}`}>
                     <label htmlFor='i_password'>Contraseña</label>
-                    <input className={`${mainPSWD_hidden ? 'hidden' : 'un_hidden'}`} id='i_password' type="text" onBlur={(e) => auto_validation(e, 'password_space')} autoComplete='current-password'/>
+                    <input className={`${mainPSWD_hidden ? 'hidden' : 'un_hidden'}`} id='i_password' onKeyDown={(e) => handleKeyDown(e)} type="text" onBlur={(e) => auto_validation(e, 'password_space')} autoComplete='current-password'/>
                     <button className='button toggle_hidden' onClick={()=> toggle_visibility('main')}>
                         <svg className='icon'>
                             <use xlinkHref={svg_icons+`${mainPSWD_hidden ? '#icon-eye-open' : '#icon-eye-close'}`}></use>
