@@ -671,28 +671,49 @@ const PublicationsSection = ({ currentUserURL, setter_currentPost, getter_curren
         } else {
             if (galleryMode) {
                 if (currentFilter) {
-                    const result = galleryElements.filter((tarjeta) => tarjeta.props.input_post.title.toLowerCase().includes(currentFilter.toLowerCase()))
-                    if (result.length > 0) {return result}
-                    else {return (
+                    if (galleryElements.length > 0 && !galleryElements.find(element => element.key === 'null-banner')) {
+                        const result = galleryElements.filter((tarjeta) => tarjeta.props.input_post.title.toLowerCase().includes(currentFilter.toLowerCase()))
+                        if (result.length > 0) {return result}
+                        else {return (
+                            <div className='empty-msg'>
+                                <svg className='icon'>
+                                    <use xlinkHref={svg_icons+'#icon-binocular'}></use>
+                                </svg>
+                                <h2>No hay publicaciones que coincidan</h2>
+                            </div>
+                            )
+                        }
+                    } else {return (
                         <div className='empty-msg'>
                             <svg className='icon'>
                                 <use xlinkHref={svg_icons+'#icon-binocular'}></use>
                             </svg>
-                            <h2>No hay publicaciones que coincidan</h2>
+                            <h2>No hay publicaciones aqui para buscar...</h2>
                         </div>
                         )
                     }
+
                 } else {return galleryElements}
             } else {
                 if (currentFilter) {
-                    const result = listElements.filter((tarjeta) => tarjeta.props.input_post.title.toLowerCase().includes(currentFilter.toLowerCase()))
-                    if (result.length > 0) {return result}
-                    else {return (
+                    if (listElements.length > 0 && !listElements.find(element => element.key === 'null-banner')) {
+                        const result = listElements.filter((tarjeta) => tarjeta.props.input_post.title.toLowerCase().includes(currentFilter.toLowerCase()))
+                        if (result.length > 0) {return result}
+                        else {return (
+                            <div className='empty-msg'>
+                                <svg className='icon'>
+                                    <use xlinkHref={svg_icons+'#icon-binocular'}></use>
+                                </svg>
+                                <h2>No hay publicaciones que coincidan</h2>
+                            </div>
+                            )
+                        }
+                    } else {return (
                         <div className='empty-msg'>
                             <svg className='icon'>
                                 <use xlinkHref={svg_icons+'#icon-binocular'}></use>
                             </svg>
-                            <h2>No hay publicaciones que coincidan</h2>
+                            <h2>No hay publicaciones aqui para buscar...</h2>
                         </div>
                         )
                     }
@@ -902,6 +923,8 @@ export const ProfilePanel = () => {
     const [ blockedInteraction, setBlockedInteraction ] = useState(false);
 
     const [ modeProfilePicUpdate, setModeProfilePicUpdate] = useState(false);
+    const [ modeBannerPicUpdate, setModeBannerPicUpdate ] = useState(false);
+    const [visibleImageUpdater, setVisibleImageUpdater] = useState(false);
 
     useEffect(() => {
         if (auth) {
@@ -961,10 +984,28 @@ export const ProfilePanel = () => {
         }
     }, [base_url, current_url.pathname]);
 
+    /* TEMPORAL */
+    useEffect(() => {
+        if (modeBannerPicUpdate || modeProfilePicUpdate) {
+            setVisibleImageUpdater(true);
+        }
+    }, [modeBannerPicUpdate, modeProfilePicUpdate])
+
     function side_publication_closer() {
         setVisiblePostViewer(false);
         setTimeout(() => {
             setCurrentPost(null);
+        }, 1000);
+    }
+
+    function modePicUpdateCloser() {
+        setVisibleImageUpdater(false);
+        setTimeout(() => {
+            if (modeProfilePicUpdate) {
+                setModeProfilePicUpdate(false)
+            } else {
+                setModeBannerPicUpdate(false)
+            }
         }, 1000);
     }
 
@@ -978,6 +1019,13 @@ export const ProfilePanel = () => {
                                 <img src={profileData.bg_url} alt="custom-background" /> :
                                 <img src={process.env.PUBLIC_URL + '/assets/imgs/loading_background.jpg'} alt="default-background" />
                             }
+                            {userData.user_url === username ?
+                            <button onClick={() => setModeBannerPicUpdate(true)} className='button iconed'>
+                                <svg className='icon'>
+                                    <use xlinkHref={svg_icons+'#icon-camera-add'}></use>
+                                </svg>
+                                <p>Cambiar imagen de portada</p>
+                            </button> :""}
                         </div>
                         <div className='user-distintion__wrapper'>
                             <div className='user-avatar profile-style'>
@@ -988,7 +1036,7 @@ export const ProfilePanel = () => {
                                     </svg>
                                 }
                                 {userData.user_url === username ?
-                                <button className='button iconed'>
+                                <button onClick={() => setModeProfilePicUpdate(true)} className='button iconed'>
                                     <svg className='icon'>
                                         <use xlinkHref={svg_icons+'#icon-camera-add'}></use>
                                     </svg>
@@ -1047,11 +1095,15 @@ export const ProfilePanel = () => {
                 <SidePublicationViewer publicationInfo={currentPost} setPublicationInfo={setCurrentPost} setter_visibility={setVisiblePostViewer} profileURL={username}/>
             </div> : ''}
             {modeProfilePicUpdate ? 
-            <div className='sub-screen__wrapper full-screen'>
-                <div>coso</div>
-            </div> : ''
-            }
-            {/* Aqui va el panel para actualizar la portada de perfil*/}
+            <div className={`sub-screen__wrapper full-screen ${visibleImageUpdater ? '' : 'hidden'}`}>
+                <div className='exit-full-screen' onClick={() => modePicUpdateCloser()}></div>
+                <div>perfil</div>
+            </div> : ''}
+            {modeBannerPicUpdate ? 
+            <div className={`sub-screen__wrapper full-screen ${visibleImageUpdater ? '' : 'hidden'}`}>
+                <div className='exit-full-screen' onClick={() => modePicUpdateCloser()}></div>
+                <div>banner</div>
+            </div> : ''}
         </div>
     );
 }

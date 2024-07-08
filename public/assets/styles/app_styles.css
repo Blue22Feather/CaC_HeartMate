@@ -721,6 +721,29 @@
                 background-color: black;
             }
         }
+        &.full-screen {
+            opacity: 1;
+            transition: all linear 1s;
+            &.hidden {
+                top: 100%;
+                bottom: -100%;
+                opacity: 0;
+                .exit-full-screen {
+                    height: 0;
+                    transition-property: width;
+                    transition-delay: 1s;
+                }
+            }
+            .exit-full-screen {
+                display: block;
+                width: 100%;
+                height: 200%;
+                position: absolute;
+                top: 0;
+                opacity: 0.5;
+                background-color: black;
+            }
+        }
     }
     .panel__wrapper {
         position: absolute;
@@ -750,6 +773,7 @@
             flex-direction: column;
             align-items: center;
             .header-bg-img__wrapper {
+                position: relative;
                 width: 70%;
                 height: 500px;
                 border-color: var(--theme_border-color__main);
@@ -762,6 +786,33 @@
                     width: 100%;
                     height: 100%;
                     object-fit: cover;
+                }
+                &:hover .button.iconed {
+                    opacity: 1;
+                }
+                .button.iconed {
+                    background: var(--theme_bg-color_2);
+                    border: 3px solid var(--theme_border-color__main);
+                    opacity: 0.25;
+                    display: flex;
+                    flex-direction: row;
+                    align-items: center;
+                    position: absolute;
+                    right: 20px;
+                    bottom: 20px;
+                    padding: 4px 8px;
+                    gap: 8px;
+                    height: 45px;
+                    align-items: center;
+                    border-radius: 30px;
+                    .icon {
+                        width: 30px;
+                        height: 30px;
+                    }
+                    p {
+                        text-wrap: nowrap;
+                        margin: 0;
+                    }
                 }
             }
             .user-distintion__wrapper {
