@@ -1,7 +1,7 @@
 /*----- Importaciones y dependencias -----*/
 import React, { useContext, useEffect, useState } from 'react';
 import { AppContext } from '../../scripts/app_context';
-import { Routes, Route, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 import { request_all_userData } from '../../scripts/server_com';
 

@@ -103,7 +103,7 @@ const SideBar = ({ theme, setTheme }) => {
         <div className={`side-bar__wrapper ${extendedBar ? 'expanded' : ''}`}>
             <div className='side-bar__top'>
                 <div className='logotype__wrapper'>
-                    <div className='app-name__wrapper'>
+                    <div onClick={toggleRead} className='app-name__wrapper'>
                         <img  src={process.env.PUBLIC_URL + '/assets/icons/logo_512.png'} alt='AppLogo' />
                         <h2>HeartMate</h2>
                     </div>
