@@ -1,0 +1,11 @@
+{
+  "files": {
+    "main.js": "/static/js/main.dac8080f.js",
+    "static/media/svg-resources.xml": "/static/media/svg-resources.2f1c76b5ff414fa2a569.xml",
+    "index.html": "/index.html",
+    "main.dac8080f.js.map": "/static/js/main.dac8080f.js.map"
+  },
+  "entrypoints": [
+    "static/js/main.dac8080f.js"
+  ]
+}
