@@ -1,6 +1,6 @@
 export const ChannelsPanel = () => {
     return(
-        <div className='common__wrapper'>
+        <div className='screen__wrapper'>
             <h1>CHANNELS</h1>
         </div>
     );

@@ -1,6 +1,6 @@
 export const FeedPanel = () => {
     return(
-        <div className='common__wrapper'>
+        <div className='screen__wrapper'>
             <h1>FEED</h1>
         </div>
     );

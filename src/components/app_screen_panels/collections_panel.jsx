@@ -1,6 +1,6 @@
 export const CollectionsPanel = () => {
     return(
-        <div className='common__wrapper'>
+        <div className='screen__wrapper'>
             <h1>COLLECTIONS</h1>
         </div>
     );

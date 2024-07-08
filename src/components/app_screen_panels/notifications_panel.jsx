@@ -1,6 +1,6 @@
 export const NotificationsPanel = () => {
     return(
-        <div className='common__wrapper'>
+        <div className='screen__wrapper'>
             <h1>NOTIFICATIONS</h1>
         </div>
     );
